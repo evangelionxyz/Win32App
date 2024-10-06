@@ -19,7 +19,8 @@ project "Program"
 
     includedirs {
         "src",
-        "third_party/glad/include"
+        "third_party/glad/include",
+        "third_party/glm/"
     }
 
     defines {
