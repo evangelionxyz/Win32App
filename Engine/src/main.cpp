@@ -11,6 +11,12 @@
 #include "audio/sound.hpp"
 #include "core/console_manager.hpp"
 
+#include "core/event.hpp"
+#include "core/key_event.hpp"
+#include "core/app_event.hpp"
+
+#include <thread>
+
 void create_console()
 {
     AllocConsole();
@@ -19,30 +25,30 @@ void create_console()
     freopen("CONIN$", "r", stdin);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+class Application
 {
-    create_console();
-    ConsoleManager console;
-
-    Window window(hInstance, nCmdShow, "OpenGL", 800, 600);
-    Scope<Shader> shader = CreateScope<Shader>("data/shaders/default.vert", "data/shaders/default.frag");
-
-    // init audio
-    AudioEngine audio_engine;
-    Sound sound("data/audio/loading_screen.wav");
-
-    audio_engine.add_sound(&sound);
-    sound.set_volume(100.0f);
-    sound.play();
-
-    float vertices[] = {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.0f,  0.5f
-    };
-
-    u32 vao, vbo;
+public:
+    Application(HINSTANCE hInstance, int nCmdShow)
     {
+        m_Window = CreateScope<Window>(hInstance, nCmdShow, "OpenGL", 800, 600);
+        m_Window->set_event_callback(BIND_EVENT_FN(on_event));
+
+        m_Shader = CreateScope<Shader>("data/shaders/default.vert", "data/shaders/default.frag");
+
+        // init audio
+        m_AudioEngine = CreateScope<AudioEngine>();
+        Sound sound("data/audio/loading_screen.wav");
+
+        m_AudioEngine->add_sound(&sound);
+        sound.set_volume(100.0f);
+        sound.play();
+
+        float vertices[] = {
+            -0.5f, -0.5f,
+            0.5f, -0.5f,
+            0.0f, 0.5f
+        };
+        
         glCreateVertexArrays(1, &vao);
         glBindVertexArray(vao);
 
@@ -55,29 +61,70 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
         glBindVertexArray(0);
     }
-    
 
-    while (window.is_looping())
+    void run()
     {
-        if (!window.poll_events())
+        std::thread t1([&]()
+            {
+                while (m_Window->is_looping())
+                {
+                    for (auto &m : m_Console.get_messages())
+                        std::cout << m.get_formatted_message() << '\n';
+                    m_Console.clear_messages();
+                }
+            });
+        t1.detach();
+
+        while (m_Window->is_looping())
         {
-            for (auto &m : console.get_messages())
-                std::cout << m.get_formatted_message() << '\n';
-            console.clear_messages();
+            if (!m_Window->poll_events())
+            {
+                m_AudioEngine->update();
 
-            audio_engine.update();
+                glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+                glClear(GL_COLOR_BUFFER_BIT);
 
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+                m_Shader->use();
+                glBindVertexArray(vao);
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+                glBindVertexArray(0);
 
-            shader->use();
-            glBindVertexArray(vao);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
-            glBindVertexArray(0);
-
-            window.swap_buffers();
+                m_Window->swap_buffers();
+            }
         }
     }
+
+    bool on_resize(WindowResizeEvent &e)
+    {
+        glViewport(0, 0, e.get_width(), e.get_height());
+        std::cout << e.to_string();
+
+        return false;
+    }
+
+    void on_event(Event &e)
+    {
+        EventDispatcher dispatcher(e);
+        dispatcher.dispatch<WindowResizeEvent>(BIND_EVENT_FN(on_resize));
+    }
+
+private:
+    Scope<Shader> m_Shader;
+    Scope<Window> m_Window;
+    Scope<AudioEngine> m_AudioEngine;
+
+    ConsoleManager m_Console;
+
+    u32 vao, vbo;
+};
+
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    create_console();
+    Application app(hInstance, nCmdShow);
+    app.run();
+    FreeConsole();
 
     return 0;
 }

@@ -1,15 +1,19 @@
 #pragma once
 
-#include "types.h"
+#include "event.hpp"
 
 #include <Windows.h>
 #include <string>
 
+#include <functional>
+
 struct WindowData
 {
     u32 Width, Height;
-    HBRUSH BorderBrush;
     i32 BorderWidth = 5;
+    HBRUSH BorderBrush;
+
+    std::function<void(Event &)> EventCallback;
 };
 
 class Window
@@ -21,6 +25,8 @@ public:
     bool is_looping() const;
     bool poll_events();
     void swap_buffers();
+
+    void set_event_callback(const std::function<void(Event &)> &callback);
 
     HWND get_hwnd() const;
 

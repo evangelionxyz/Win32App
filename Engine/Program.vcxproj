@@ -103,9 +103,14 @@
   <ItemGroup>
     <ClInclude Include="src\audio\audio_engine.hpp" />
     <ClInclude Include="src\audio\sound.hpp" />
+    <ClInclude Include="src\core\app_event.hpp" />
     <ClInclude Include="src\core\base.hpp" />
     <ClInclude Include="src\core\console_manager.hpp" />
     <ClInclude Include="src\core\event.hpp" />
+    <ClInclude Include="src\core\keycodes.hpp" />
+    <ClInclude Include="src\core\key_event.hpp" />
+    <ClInclude Include="src\core\mouse_codes.hpp" />
+    <ClInclude Include="src\core\mouse_event.hpp" />
     <ClInclude Include="src\core\timestep.hpp" />
     <ClInclude Include="src\core\types.h" />
     <ClInclude Include="src\core\utils.hpp" />
@@ -118,7 +123,6 @@
     <ClCompile Include="src\audio\audio_engine.cpp" />
     <ClCompile Include="src\audio\sound.cpp" />
     <ClCompile Include="src\core\console_manager.cpp" />
-    <ClCompile Include="src\core\event.cpp" />
     <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\renderer\shader.cpp" />

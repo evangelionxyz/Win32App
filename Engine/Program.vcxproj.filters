@@ -39,11 +39,27 @@
     <ClInclude Include="src\renderer\vertex_buffer.hpp">
       <Filter>src\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\audio\audio_engine.hpp" />
+    <ClInclude Include="src\audio\sound.hpp" />
+    <ClInclude Include="src\core\base.hpp" />
+    <ClInclude Include="src\core\console_manager.hpp" />
+    <ClInclude Include="src\core\timestep.hpp" />
+    <ClInclude Include="src\core\utils.hpp" />
+    <ClInclude Include="src\core\app_event.hpp" />
+    <ClInclude Include="src\core\key_event.hpp">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\keycodes.hpp">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mouse_codes.hpp">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\mouse_event.hpp">
+      <Filter>src\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\event.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\window.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
@@ -62,5 +78,8 @@
     <ClCompile Include="third_party\glad\src\glad.c">
       <Filter>third_party\glad\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\audio\audio_engine.cpp" />
+    <ClCompile Include="src\audio\sound.cpp" />
+    <ClCompile Include="src\core\console_manager.cpp" />
   </ItemGroup>
 </Project>

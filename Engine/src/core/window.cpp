@@ -1,7 +1,10 @@
 #include "utils.hpp"
 
-#include "window.hpp"
+#include "app_event.hpp"
+#include "mouse_event.hpp"
+#include "key_event.hpp"
 
+#include "window.hpp"
 #include "console_manager.hpp"
 
 #include <windowsx.h>
@@ -101,6 +104,11 @@ void Window::swap_buffers()
     SwapBuffers(m_HDC);
 }
 
+void Window::set_event_callback(const std::function<void(Event &)> &callback)
+{
+    m_Data->EventCallback = callback;
+}
+
 HWND Window::get_hwnd() const
 {
     return m_HWND;
@@ -134,9 +142,13 @@ LRESULT CALLBACK Window::window_proc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM
     {
         int width = LOWORD(lParam);
         int height = HIWORD(lParam);
-        glViewport(0, 0, width, height);
 
-        ConsoleManager::get_instance().push_info("Window resized {} {}", width, height);
+        if (userData->EventCallback)
+        {
+            WindowResizeEvent event(width, height);
+            userData->EventCallback(event);
+        }
+        
         return 0;
     }
     case WM_DESTROY:
