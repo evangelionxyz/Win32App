@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;NOMINMAX;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;ONG_RELEASE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;third_party\glad\include;third_party\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;third_party\glad\include;third_party\glm;third_party\openal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -76,7 +76,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;gdi32.lib;Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;gdi32.lib;Dwmapi.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>third_party\openal\libs\Win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
@@ -84,7 +85,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;NOMINMAX;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;OGN_DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;third_party\glad\include;third_party\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;third_party\glad\include;third_party\glm;third_party\openal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -95,22 +96,34 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;gdi32.lib;Dwmapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;gdi32.lib;Dwmapi.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>third_party\openal\libs\Win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\shader.hpp" />
-    <ClInclude Include="src\types.h" />
-    <ClInclude Include="src\vertex_array.hpp" />
-    <ClInclude Include="src\vertex_buffer.hpp" />
-    <ClInclude Include="src\window.hpp" />
+    <ClInclude Include="src\audio\audio_engine.hpp" />
+    <ClInclude Include="src\audio\sound.hpp" />
+    <ClInclude Include="src\core\base.hpp" />
+    <ClInclude Include="src\core\console_manager.hpp" />
+    <ClInclude Include="src\core\event.hpp" />
+    <ClInclude Include="src\core\timestep.hpp" />
+    <ClInclude Include="src\core\types.h" />
+    <ClInclude Include="src\core\utils.hpp" />
+    <ClInclude Include="src\core\window.hpp" />
+    <ClInclude Include="src\renderer\shader.hpp" />
+    <ClInclude Include="src\renderer\vertex_array.hpp" />
+    <ClInclude Include="src\renderer\vertex_buffer.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\audio\audio_engine.cpp" />
+    <ClCompile Include="src\audio\sound.cpp" />
+    <ClCompile Include="src\core\console_manager.cpp" />
+    <ClCompile Include="src\core\event.cpp" />
+    <ClCompile Include="src\core\window.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\shader.cpp" />
-    <ClCompile Include="src\vertex_array.cpp" />
-    <ClCompile Include="src\vertex_buffer.cpp" />
-    <ClCompile Include="src\window.cpp" />
+    <ClCompile Include="src\renderer\shader.cpp" />
+    <ClCompile Include="src\renderer\vertex_array.cpp" />
+    <ClCompile Include="src\renderer\vertex_buffer.cpp" />
     <ClCompile Include="third_party\glad\src\glad.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

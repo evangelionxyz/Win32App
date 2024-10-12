@@ -7,7 +7,7 @@ project "Program"
     targetdir (BUILD_DIR)
     objdir (OBJS_DIR)
 
-    links { "opengl32", "gdi32", "Dwmapi"}
+    links { "opengl32", "gdi32", "Dwmapi", "OpenAL32" }
 
     files {
         "src/**.cpp",
@@ -20,7 +20,12 @@ project "Program"
     includedirs {
         "src",
         "third_party/glad/include",
-        "third_party/glm/"
+        "third_party/glm/",
+        "third_party/openal/include",
+    }
+
+    libdirs {
+       "third_party/openal/libs/Win64"
     }
 
     defines {

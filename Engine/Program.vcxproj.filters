@@ -4,6 +4,12 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\renderer">
+      <UniqueIdentifier>{936D1A48-7FD0-A9EC-2856-E2A21498756F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="third_party">
       <UniqueIdentifier>{0FB18DF1-7B66-06E7-045B-00BE700FFDEA}</UniqueIdentifier>
     </Filter>
@@ -15,37 +21,43 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\shader.hpp">
-      <Filter>src</Filter>
+    <ClInclude Include="src\core\event.hpp">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\types.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\core\types.h">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\vertex_array.hpp">
-      <Filter>src</Filter>
+    <ClInclude Include="src\core\window.hpp">
+      <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="src\vertex_buffer.hpp">
-      <Filter>src</Filter>
+    <ClInclude Include="src\renderer\shader.hpp">
+      <Filter>src\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\window.hpp">
-      <Filter>src</Filter>
+    <ClInclude Include="src\renderer\vertex_array.hpp">
+      <Filter>src\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer\vertex_buffer.hpp">
+      <Filter>src\renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\event.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\window.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\shader.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\renderer\shader.cpp">
+      <Filter>src\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\vertex_array.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\renderer\vertex_array.cpp">
+      <Filter>src\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\vertex_buffer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\window.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\renderer\vertex_buffer.cpp">
+      <Filter>src\renderer</Filter>
     </ClCompile>
     <ClCompile Include="third_party\glad\src\glad.c">
       <Filter>third_party\glad\src</Filter>

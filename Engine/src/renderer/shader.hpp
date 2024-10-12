@@ -1,7 +1,6 @@
 #pragma once
 #include <stdint.h>
-
-#include "types.h"
+#include "core/types.h"
 
 class Shader
 {
